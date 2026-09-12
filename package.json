@@ -1,0 +1,15 @@
+{
+  "name": "hengshui-handwriting-generator",
+  "version": "1.0.0",
+  "description": "A local browser-based English Hengshui handwriting worksheet generator.",
+  "private": false,
+  "scripts": {
+    "check": "node --check app.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "playwright": "^1.63.0"
+  }
+}

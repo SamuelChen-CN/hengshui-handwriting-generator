@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>英语衡水体字帖生成器</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-copy">
+      <h1>英语衡水体字帖生成器</h1>
+    <p>输入英语作文，实时生成 A4 英语字帖</p>
+    </div>
+    <div class="header-actions">
+      <span id="font-status" class="font-status">字体：正在加载……</span>
+      <button id="print-button" type="button" class="primary">打印 / 保存 PDF</button>
+    </div>
+  </header>
+
+  <main class="app-layout">
+    <aside class="editor-panel">
+      <label for="essay-input">英语作文</label>
+      <textarea id="essay-input" placeholder="在这里粘贴英语作文……"></textarea>
+      <div class="stats"><span id="char-count">字符数：0</span><span id="word-count">单词数：0</span></div>
+      <div class="input-actions">
+        <button id="example-button" type="button">填入示例</button>
+        <button id="clear-button" type="button">清空</button>
+      </div>
+
+      <fieldset>
+        <legend>字帖模式</legend>
+        <label><input type="radio" name="mode" value="copy" checked> 抄写</label>
+        <label><input type="radio" name="mode" value="trace"> 临摹</label>
+        <label><input type="radio" name="mode" value="outline"> 描红</label>
+      </fieldset>
+
+      <p class="fixed-setting">字体大小：固定 28px</p>
+
+      <p class="fixed-setting">答题卡横线：固定 9mm 间距</p>
+
+    </aside>
+
+    <section class="preview-container" aria-label="字帖预览">
+      <div id="preview-pages"></div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
