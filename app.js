@@ -1,4 +1,5 @@
 const exampleText = "Nowadays, English is becoming more and more important in our daily life. As students, we should spend more time learning English and improving our communication skills.\n\nIn my opinion, reading English books and practicing writing every day are effective ways to improve our English.";
+const defaultSettings = { fontSize: "28", fontColor: "#000000", lineHeight: "9", lineWidth: "1", lineColor: "#000000", showLines: true };
 const $ = (id) => document.getElementById(id);
 let renderToken = 0;
 
@@ -81,12 +82,14 @@ function applyMode(lines, mode) {
 
 async function render() {
   const token = ++renderToken;
+  const settings = currentStyle();
+  await document.fonts.load(`${settings.fontSize}px "Hengshui"`);
   await document.fonts.ready;
   if (token !== renderToken) return;
   const rawText = $("essay-input").value;
   const text = rawText.trim();
+  const hasInput = rawText.length > 0;
   const hasContent = /\S/.test(rawText);
-  const settings = currentStyle();
   $("char-count").textContent = `字符数：${rawText.length}`;
   $("word-count").textContent = `单词数：${text ? text.split(/\s+/).length : 0}`;
   const pages = $("preview-pages");
@@ -101,7 +104,7 @@ async function render() {
   const lineHeightPx = lineUnit.getBoundingClientRect().height;
   lineUnit.remove();
   const capacity = Math.max(1, Math.floor((content.clientHeight - 1) / lineHeightPx));
-  const sourceLines = makeWrappedLines(hasContent ? rawText : "请在左侧输入英语作文", width, settings);
+  const sourceLines = makeWrappedLines(hasInput ? rawText : "请在左侧输入英语作文", width, settings);
   const lines = hasContent ? applyMode(sourceLines, settings.mode) : sourceLines;
   pages.replaceChildren();
   for (let start = 0; start < lines.length; start += capacity) {
@@ -112,7 +115,7 @@ async function render() {
       line.className = "practice-line";
       line.textContent = value || "\u00a0";
       styleLine(line, settings);
-      if (!hasContent) line.classList.add("placeholder");
+      if (!hasInput) line.classList.add("placeholder");
       pageContent.append(line);
     });
     pages.append(page);
@@ -135,6 +138,16 @@ document.querySelectorAll("textarea, input").forEach((input) => input.addEventLi
 $("example-button").addEventListener("click", () => { $("essay-input").value = exampleText; render(); });
 $("clear-button").addEventListener("click", () => { $("essay-input").value = ""; render(); });
 $("print-button").addEventListener("click", () => window.print());
+$("reset-settings").addEventListener("click", () => {
+  $("font-size").value = defaultSettings.fontSize;
+  $("font-color").value = defaultSettings.fontColor;
+  $("line-height").value = defaultSettings.lineHeight;
+  $("line-width").value = defaultSettings.lineWidth;
+  $("line-color").value = defaultSettings.lineColor;
+  $("show-lines").checked = defaultSettings.showLines;
+  updateSettingLabels();
+  render();
+});
 document.fonts.ready.then(() => { $("font-status").textContent = "字体：衡水体已加载"; render(); });
 updateSettingLabels();
 render();

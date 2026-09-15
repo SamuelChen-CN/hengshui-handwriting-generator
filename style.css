@@ -34,6 +34,7 @@ button.primary { color: #fff; border-color: #315efb; background: #315efb; }
 .setting-group label { display: flex; justify-content: space-between; align-items: center; font-weight: 400; }
 .setting-group output { color: #667085; font-size: 12px; }
 .checkbox-label { justify-content: flex-start !important; gap: 8px; margin-top: 12px; }
+.reset-button { width: 100%; margin-top: 18px; }
 .practice-line { position: relative; width: 100%; height: var(--line-height, 9mm); white-space: pre; overflow: visible; font-family: "Hengshui", sans-serif; font-size: 28px; line-height: 9mm; letter-spacing: 0; word-spacing: 0; }
 .practice-line::after { content: ""; position: absolute; left: 0; right: 0; bottom: 2mm; height: 0; border-top: var(--line-width, 1px) solid var(--line-color, #000); pointer-events: none; }
 .practice-line.hide-lines::after { display: none; }
