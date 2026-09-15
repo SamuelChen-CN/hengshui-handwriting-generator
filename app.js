@@ -8,7 +8,18 @@ function getSetting(name, fallback) {
 }
 
 function currentStyle() {
-  return { fontSize: 28, lineHeight: "9mm", color: "#000000", mode: getSetting("mode", "copy") };
+  const fontSize = Number($("font-size").value);
+  const lineHeight = Number($("line-height").value);
+  const lineWidth = Number($("line-width").value);
+  return {
+    fontSize: Number.isFinite(fontSize) ? fontSize : 28,
+    lineHeight: `${Number.isFinite(lineHeight) ? lineHeight : 9}mm`,
+    color: $("font-color").value,
+    lineWidth: Number.isFinite(lineWidth) ? lineWidth : 1,
+    lineColor: $("line-color").value,
+    showLines: $("show-lines").checked,
+    mode: getSetting("mode", "copy")
+  };
 }
 
 function createPage() {
@@ -23,7 +34,11 @@ function createPage() {
 function styleLine(line, settings) {
   line.style.fontSize = `${settings.fontSize}px`;
   line.style.lineHeight = settings.lineHeight;
-  line.style.color = "#000000";
+  line.style.setProperty("--line-height", settings.lineHeight);
+  line.style.color = settings.color;
+  line.style.setProperty("--line-width", `${settings.lineWidth}px`);
+  line.style.setProperty("--line-color", settings.lineColor);
+  line.classList.toggle("hide-lines", !settings.showLines);
   if (settings.mode === "outline") line.classList.add("mode-outline");
 }
 
@@ -81,7 +96,7 @@ async function render() {
   const content = samplePage.querySelector(".page-content");
   const width = content.clientWidth;
   const lineUnit = document.createElement("div");
-  lineUnit.style.height = "9mm";
+  lineUnit.style.height = settings.lineHeight;
   document.body.append(lineUnit);
   const lineHeightPx = lineUnit.getBoundingClientRect().height;
   lineUnit.remove();
@@ -104,11 +119,22 @@ async function render() {
   }
 }
 
+function updateSettingLabels() {
+  $("font-size-value").value = `${$("font-size").value}px`;
+  $("font-size-value").textContent = `${$("font-size").value}px`;
+  $("line-height-value").value = `${$("line-height").value}mm`;
+  $("line-height-value").textContent = `${$("line-height").value}mm`;
+  $("line-width-value").value = `${$("line-width").value}px`;
+  $("line-width-value").textContent = `${$("line-width").value}px`;
+}
+
 document.querySelectorAll("textarea, input").forEach((input) => input.addEventListener("input", () => {
+  updateSettingLabels();
   render();
 }));
 $("example-button").addEventListener("click", () => { $("essay-input").value = exampleText; render(); });
 $("clear-button").addEventListener("click", () => { $("essay-input").value = ""; render(); });
 $("print-button").addEventListener("click", () => window.print());
 document.fonts.ready.then(() => { $("font-status").textContent = "字体：衡水体已加载"; render(); });
+updateSettingLabels();
 render();

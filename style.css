@@ -7,6 +7,7 @@ body { margin: 0; }
 .app-header h1 { margin: 0 0 8px; font-size: 26px; }
 .app-header p { margin: 0; color: #667085; }
 .header-actions { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+.version { color: #667085; font-size: 12px; white-space: nowrap; }
 .app-layout { display: grid; grid-template-columns: 320px 1fr; gap: 24px; max-width: 1500px; margin: 0 auto; padding: 24px; }
 .editor-panel { padding: 20px; background: #fff; border: 1px solid #d9dee7; border-radius: 12px; }
 label, legend { font-weight: 600; font-size: 14px; }
@@ -26,9 +27,16 @@ button.primary { color: #fff; border-color: #315efb; background: #315efb; }
 #preview-pages { display: grid; justify-items: center; gap: 24px; }
 .page { width: 210mm; height: 297mm; padding: 20mm 18mm; overflow: hidden; background: #fff; box-shadow: 0 2px 15px rgba(16, 24, 40, .14); }
 .page-content { width: 100%; height: 100%; }
-.fixed-setting { margin: 16px 0; color: #667085; font-size: 13px; }
-.practice-line { position: relative; width: 100%; height: 9mm; white-space: pre; overflow: visible; font-family: "Hengshui", sans-serif; font-size: 28px; line-height: 9mm; letter-spacing: 0; word-spacing: 0; }
-.practice-line::after { content: ""; position: absolute; left: 0; right: 0; bottom: 2mm; height: 0; border-top: 1px solid #000; pointer-events: none; }
+.advanced-settings { margin-top: 16px; border-top: 1px solid #d9dee7; padding-top: 14px; }
+.advanced-settings summary { cursor: pointer; font-weight: 600; }
+.setting-group { margin-top: 16px; }
+.setting-group h2 { margin: 0 0 10px; font-size: 13px; }
+.setting-group label { display: flex; justify-content: space-between; align-items: center; font-weight: 400; }
+.setting-group output { color: #667085; font-size: 12px; }
+.checkbox-label { justify-content: flex-start !important; gap: 8px; margin-top: 12px; }
+.practice-line { position: relative; width: 100%; height: var(--line-height, 9mm); white-space: pre; overflow: visible; font-family: "Hengshui", sans-serif; font-size: 28px; line-height: 9mm; letter-spacing: 0; word-spacing: 0; }
+.practice-line::after { content: ""; position: absolute; left: 0; right: 0; bottom: 2mm; height: 0; border-top: var(--line-width, 1px) solid var(--line-color, #000); pointer-events: none; }
+.practice-line.hide-lines::after { display: none; }
 .mode-outline { color: rgba(0, 0, 0, .3) !important; }
 .placeholder { color: #98a2b3 !important; font-family: system-ui, sans-serif; }
 .measure-surface { position: absolute; left: -100000px; top: 0; visibility: hidden; white-space: pre; }
